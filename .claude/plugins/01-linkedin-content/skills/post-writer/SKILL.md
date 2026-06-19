@@ -88,14 +88,47 @@ Fill in actual angle options based on topic research.
 
 ## Step 3. Write the draft
 
-Write the post:
-- Read voice.md for tone, rhythm, hook style, CTA style, absence patterns, and banned patterns
-- Read about-me.md for audience and topic context
-- **Sentence length**: match the average sentence length from voice.md's "Sentence rhythm" section. If voice.md says average is 14 words, keep most sentences between 10-18 words. Never exceed the maximum range noted in voice.md.
-- **Paragraph rhythm**: match the paragraph length and pacing pattern from voice.md
-- **Banned patterns**: check every sentence against the "Banned phrases and patterns" section in voice.md. If a sentence contains a banned phrase, rewrite it. This is a hard constraint — zero tolerance.
-- Use the hook pattern that fits the chosen angle
-- End with the CTA style from voice.md
+### 3a. Show the writing brief
+
+Before writing a single word, read voice.md and about-me.md and present the user with a visible brief — the rules this post will follow. Extract every relevant constraint and show it:
+
+> **Writing brief for this post:**
+>
+> | Constraint | Value |
+> |-----------|-------|
+> | **Tone** | [from voice.md — e.g. "Confident, direct, no fluff"] |
+> | **POV** | [from voice.md — e.g. "First person singular"] |
+> | **Avg sentence length** | [from voice.md — e.g. "14 words (range: 8-22)"] |
+> | **Paragraph length** | [from voice.md — e.g. "2-3 sentences"] |
+> | **Post length** | [150-300 words unless user requested otherwise] |
+> | **Hook style** | [the hook pattern chosen in Step 2] |
+> | **Closing style** | [from voice.md — e.g. "Direct CTA, no motivational fluff"] |
+> | **Format** | [from voice.md — e.g. "Prose over lists, no emoji"] |
+>
+> **Banned patterns** (zero tolerance):
+> - [banned phrase 1 from voice.md]
+> - [banned phrase 2]
+> - [banned phrase 3]
+> - [...all banned patterns from voice.md]
+>
+> **This voice never:**
+> - [never-does 1 from voice.md]
+> - [never-does 2]
+> - [...]
+
+Fill every row from actual voice.md data. Do not show empty or placeholder rows. If voice.md does not have data for a constraint, omit that row.
+
+Wait for the user to confirm or adjust before writing. If they say "looks good" or similar, proceed. If they want to override a constraint for this specific post (e.g. "make it longer this time"), note the override.
+
+### 3b. Write the post
+
+Now write, following every constraint from the brief:
+- Match the sentence length range — if average is 14 words, keep most sentences between 10-18 words
+- Match the paragraph rhythm and pacing pattern
+- Check every sentence against the banned patterns list — if a sentence contains a banned phrase, rewrite it
+- Use the hook pattern from the brief
+- End with the closing style from the brief
+- Apply any user overrides from 3a
 
 Output inside a plain code block:
 
@@ -103,7 +136,7 @@ Output inside a plain code block:
 [The full post with all line breaks and formatting as it should appear on LinkedIn]
 ```
 
-After the code block, add 2-3 sentences on why you chose this hook and structure.
+After the code block, add 2-3 sentences on why you chose this hook and structure, referencing specific patterns from voice.md.
 
 ## Step 4. Iterate
 
