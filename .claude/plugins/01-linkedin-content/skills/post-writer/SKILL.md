@@ -89,10 +89,11 @@ Fill in actual angle options based on topic research.
 ## Step 3. Write the draft
 
 Write the post:
-- Read voice.md for tone, rhythm, hook style, CTA style, absence patterns
+- Read voice.md for tone, rhythm, hook style, CTA style, absence patterns, and banned patterns
 - Read about-me.md for audience and topic context
-- Match sentence length and paragraph rhythm from voice.md
-- Avoid every banned word, structure, and pattern in voice.md
+- **Sentence length**: match the average sentence length from voice.md's "Sentence rhythm" section. If voice.md says average is 14 words, keep most sentences between 10-18 words. Never exceed the maximum range noted in voice.md.
+- **Paragraph rhythm**: match the paragraph length and pacing pattern from voice.md
+- **Banned patterns**: check every sentence against the "Banned phrases and patterns" section in voice.md. If a sentence contains a banned phrase, rewrite it. This is a hard constraint — zero tolerance.
 - Use the hook pattern that fits the chosen angle
 - End with the CTA style from voice.md
 
@@ -118,7 +119,8 @@ If "ship it": save as a markdown file in the project.
 
 - Always read about-me.md and voice.md before writing.
 - Always output posts in a plain code block.
-- Never use em dashes in any post.
+- Never use any phrase listed in voice.md's "Banned phrases and patterns" section. Zero tolerance.
+- Match the sentence length metrics from voice.md. If average is 14 words, do not write 25-word sentences.
 - British English unless voice.md says otherwise.
 - Do not add hashtags unless voice.md explicitly uses them.
 - Do not add engagement bait CTAs unless they appear in voice.md.

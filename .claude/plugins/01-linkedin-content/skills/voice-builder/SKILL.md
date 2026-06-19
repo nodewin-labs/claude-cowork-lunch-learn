@@ -278,15 +278,72 @@ Wait for minimum 3 samples. If fewer, ask for more.
 
 ## Step 5. Analyse the samples
 
-Read every sample. Extract patterns across ALL samples:
+Read every sample. Extract patterns across ALL samples in four categories:
 
-**Voice signals**: average sentence length, paragraph rhythm, hook style, POV, tone, signature phrases, closing style
+### 5a. Positive patterns (what this voice DOES)
+
+**Voice signals**: hook style, POV, tone, signature phrases, closing style
+
+**Sentence metrics** (calculate precisely, not approximately):
+- Count total sentences across all samples
+- Calculate average sentence length in words
+- Find the range (shortest and longest sentence lengths)
+- Calculate average paragraph length in sentences
+- Note the pacing pattern (do sentences alternate short/long? build in length? stay consistent?)
 
 **Structural signals**: length range, lists vs prose, transitions
 
 **Topic signals**: recurring subjects, apparent audience
 
-**Absence signals**: words/punctuation consistently absent, hook types never used, tones never hit, structures avoided
+### 5b. Absence patterns (what this voice NEVER does)
+
+Scan all samples for what is consistently absent:
+- Words and punctuation never used (e.g. em dashes in 0 of 5 samples)
+- Hook types never deployed (e.g. never opens with a rhetorical question)
+- Tones never hit (e.g. never motivational, never apologetic)
+- Structural moves never made (e.g. never uses numbered lists, never ends with a question)
+
+### 5c. AI pattern scan
+
+Cross-reference the samples against common AI writing patterns. For each pattern below, check: does this voice use it (found in samples), avoid it (absent from all samples), or is it ambiguous?
+
+**Phrases to scan for:**
+- "Here's the thing..." / "Here's what nobody tells you..."
+- "Let me be honest..." / "Let's be real..."
+- "Not X, but Y" constructions ("Not a tool, but a mindset")
+- "The truth is..." / "The reality is..."
+- "Game-changer" / "Unlock" / "Leverage" / "Navigate" / "Elevate"
+- "Deep dive" / "Double down" / "Move the needle"
+- "In today's [fast-paced/ever-changing] world..."
+- "If you're not doing X, you're falling behind"
+- Stacked rhetorical questions as hooks
+- Motivational closing ("You've got this!" / "The time to start is now")
+- Em dashes used for dramatic pauses
+- Parenthetical asides (brackets for commentary)
+- Emoji-heavy formatting
+- "I" as the first word of the post
+- Listicle padding ("Here are 7 things...")
+
+**For each pattern found in the samples**: note it as part of the voice (keep it).
+**For each pattern absent from all samples**: flag it as a banned pattern.
+**For patterns the user's samples don't clearly resolve**: ask the user via AskUserQuestion — present the ambiguous patterns and ask which they want to ban:
+
+```json
+[
+  {
+    "question": "I found some writing patterns in your samples that could go either way. Which of these do you want to AVOID in your content?",
+    "header": "Anti-patterns",
+    "multiSelect": true,
+    "options": [
+      {"label": "[pattern 1]", "description": "[example of how it looks + why it might feel AI-generated]"},
+      {"label": "[pattern 2]", "description": "[example]"},
+      {"label": "[pattern 3]", "description": "[example]"}
+    ]
+  }
+]
+```
+
+Only ask about genuinely ambiguous patterns. If the samples clearly use or clearly avoid a pattern, do not ask — just record it.
 
 ## Step 6. Write voice.md
 
@@ -302,7 +359,11 @@ Create voice.md in the project root:
 [3-5 attributes the voice hits, plus 1-2 tones it never hits]
 
 ## Sentence rhythm
-[Average length, pacing, paragraph structure, avoidance patterns]
+- Average sentence length: [X words — calculated from samples]
+- Range: [shortest avg to longest avg across samples, e.g. "8-22 words"]
+- Paragraph length: [X sentences per paragraph on average]
+- Pacing pattern: [e.g. "short-short-long", "consistent medium", "opens short then builds"]
+- Avoidance: [e.g. "never exceeds 30 words in a sentence", "no single-word paragraphs"]
 
 ## Hook patterns
 [3-5 hook types with one example each, plus absent hook types]
@@ -319,11 +380,26 @@ Create voice.md in the project root:
 ## Off-limits
 [Words, punctuation, or constructions absent from every sample]
 
+## Banned phrases and patterns
+[Concrete list of phrases and structural patterns this voice must NEVER use. Each item includes the pattern and why it is banned. Sources: absence from samples + AI pattern scan + user confirmation.]
+
+Examples of what this section looks like when filled:
+- Never use em dashes for dramatic pauses (0 of 5 samples)
+- Never open with "Here's the thing..." or "Here's what nobody tells you..." (AI-ism, absent from samples)
+- Never use "game-changer", "unlock", "leverage", "navigate", "elevate" (corporate AI vocabulary)
+- Never use "Not X, but Y" constructions (absent from all samples, common AI pattern)
+- Never use stacked rhetorical questions as hooks (user confirmed ban)
+- Never end with motivational closers like "You've got this!" (tone mismatch)
+- Never start a post with "I" as the first word (absent from samples)
+- Never use "In today's [adjective] world..." (AI-ism filler)
+
+Only include patterns that are actually banned based on sample analysis + user input. Do not copy this example list verbatim.
+
 ## What this voice never does
-[3-5 specific behaviours from gaps in the samples]
+[3-5 specific behavioural patterns from gaps in the samples — broader than individual phrases. E.g. "never hedges a strong opinion", "never addresses the reader as 'friend'", "never uses more than one emoji per post"]
 ```
 
-Fill every section from actual data. No generic filler. Keep under 500 words.
+Fill every section from actual data. No generic filler. Keep under 600 words (increased from 500 to accommodate banned patterns).
 
 ## Step 7. Render Voice Profile Card and hand off
 
@@ -370,6 +446,10 @@ Then say:
   .never-list { list-style: none; }
   .never-list li { padding: 6px 0; font-size: 14px; color: #d4d4d4; }
   .never-list li::before { content: "✕ "; color: #666; }
+  .banned-list { list-style: none; }
+  .banned-list li { padding: 5px 0; font-size: 13px; color: #d4d4d4; display: flex; align-items: baseline; gap: 8px; }
+  .banned-list .phrase { background: #2a1a1a; border: 1px solid #4a2a2a; border-radius: 4px; padding: 2px 8px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; color: #e5a3a3; white-space: nowrap; }
+  .banned-list .reason { color: #737373; font-size: 12px; }
   .summary { font-size: 14px; color: #d4d4d4; line-height: 1.6; }
 </style>
 </head>
@@ -433,6 +513,16 @@ Then say:
         <div class="hook-type">{{hook_type_3}}</div>
         <div class="hook-example">"{{hook_example_3}}"</div>
       </li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Banned Phrases & Patterns</div>
+    <ul class="banned-list">
+      <li><span class="phrase">{{banned_phrase_1}}</span> <span class="reason">{{reason_1}}</span></li>
+      <li><span class="phrase">{{banned_phrase_2}}</span> <span class="reason">{{reason_2}}</span></li>
+      <li><span class="phrase">{{banned_phrase_3}}</span> <span class="reason">{{reason_3}}</span></li>
+      <!-- add more as found — typically 5-10 banned patterns -->
     </ul>
   </div>
 
