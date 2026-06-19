@@ -24,22 +24,48 @@ Before the session, make sure you have:
 
 ## How to install the plugins
 
-Each exercise has its own Claude Cowork plugin. Install them one at a time as the session progresses:
+### Option A: GitHub Connector (recommended)
 
-**Exercise 1 — LinkedIn Content:**
-```
-Open Claude Cowork → Settings → Extensions → Add from folder → .claude/plugins/01-linkedin-content/
-```
+Connect this repo to your Claude Cowork account and all plugins are discovered automatically:
 
-**Exercise 2 — Meeting Intelligence:**
-```
-Open Claude Cowork → Settings → Extensions → Add from folder → .claude/plugins/02-meeting-intelligence/
-```
+1. Open **Claude Cowork** (desktop app or [claude.ai](https://claude.ai))
+2. Go to **Settings → Integrations → GitHub**
+3. Connect your GitHub account (or your company's GitHub org)
+4. Search for `nodewin-labs/claude-cowork-lunch-learn`
+5. Click **Install** — Claude discovers all 3 plugins from the marketplace.json
 
-**Exercise 3 — Metaskills:**
-```
-Open Claude Cowork → Settings → Extensions → Add from folder → .claude/plugins/03-metaskills/
-```
+> **Screenshots**: See the `media/` folder for step-by-step installation screenshots.
+
+### Option B: Manual folder install
+
+If you prefer to install from a local clone:
+
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/nodewin-labs/claude-cowork-lunch-learn.git
+   ```
+2. In Claude Cowork, go to **Settings → Extensions → Add from folder**
+3. Navigate to the plugin folder for each exercise:
+
+| Exercise | Folder path |
+|----------|------------|
+| LinkedIn Content | `.claude/plugins/01-linkedin-content/` |
+| Meeting Intelligence | `.claude/plugins/02-meeting-intelligence/` |
+| Metaskills | `.claude/plugins/03-metaskills/` |
+
+### MCP servers (Exercise 2)
+
+The Meeting Intelligence plugin comes pre-configured with MCP server references for common tools. When you install the plugin, Claude will prompt you to connect the ones you use:
+
+| Category | Supported tools |
+|----------|----------------|
+| **Calendar** | Google Calendar, Microsoft Outlook |
+| **CRM** | HubSpot, Salesforce, Pipedrive, Teamleader |
+| **Meeting recorder** | Fathom, Leexi, Krisp, Granola, Otter.ai, Fireflies |
+| **Enrichment** | BrightData, FullEnrich |
+| **Communication** | Gmail, Slack, Microsoft Teams |
+
+You only need to connect the tools you actually use. The onboarding skill adapts to whatever is available.
 
 ## Repo structure
 

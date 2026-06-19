@@ -1,0 +1,60 @@
+{
+  "mcpServers": {
+    "google-calendar": {
+      "type": "http",
+      "url": "https://calendarmcp.googleapis.com/mcp/v1"
+    },
+    "gmail": {
+      "type": "http",
+      "url": "https://gmailmcp.googleapis.com/mcp/v1"
+    },
+    "hubspot": {
+      "type": "http",
+      "url": "https://mcp.hubspot.com"
+    },
+    "salesforce": {
+      "type": "http",
+      "url": "https://mcp.salesforce.com"
+    },
+    "pipedrive": {
+      "type": "http",
+      "url": "https://mcp.pipedrive.com"
+    },
+    "teamleader": {
+      "type": "http",
+      "url": "https://mcp.teamleader.eu"
+    },
+    "fathom": {
+      "type": "http",
+      "url": "https://mcp.fathom.video"
+    },
+    "leexi": {
+      "type": "http",
+      "url": "https://mcp.leexi.ai"
+    },
+    "krisp": {
+      "type": "http",
+      "url": "https://mcp.krisp.ai"
+    },
+    "granola": {
+      "type": "http",
+      "url": "https://mcp.granola.ai"
+    },
+    "otter": {
+      "type": "http",
+      "url": "https://mcp.otter.ai"
+    },
+    "fireflies": {
+      "type": "http",
+      "url": "https://mcp.fireflies.ai"
+    },
+    "brightdata": {
+      "type": "http",
+      "url": "https://mcp.brightdata.com"
+    },
+    "fullenrich": {
+      "type": "http",
+      "url": "https://mcp.fullenrich.com"
+    }
+  }
+}

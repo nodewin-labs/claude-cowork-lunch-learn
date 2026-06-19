@@ -32,6 +32,7 @@ Use AskUserQuestion with these options:
       {"label": "HubSpot", "description": "HubSpot CRM (free or paid)"},
       {"label": "Salesforce", "description": "Salesforce CRM"},
       {"label": "Pipedrive", "description": "Pipedrive CRM"},
+      {"label": "Teamleader", "description": "Teamleader CRM"},
       {"label": "None", "description": "I do not use a CRM"}
     ]
   },
@@ -41,6 +42,9 @@ Use AskUserQuestion with these options:
     "multiSelect": false,
     "options": [
       {"label": "Fathom", "description": "Fathom meeting recorder"},
+      {"label": "Leexi", "description": "Leexi AI meeting assistant"},
+      {"label": "Krisp", "description": "Krisp meeting notes and transcription"},
+      {"label": "Granola", "description": "Granola AI meeting notes"},
       {"label": "Otter.ai", "description": "Otter meeting transcripts"},
       {"label": "Fireflies", "description": "Fireflies.ai meeting notes"},
       {"label": "None", "description": "I do not record meetings"}
@@ -88,7 +92,11 @@ After both batches, attempt a lightweight MCP operation for each tool the user s
 - **HubSpot**: try searching for a single contact
 - **Salesforce**: try a simple SOQL query
 - **Pipedrive**: try listing one deal
+- **Teamleader**: try listing one contact
 - **Fathom**: try listing recent meetings
+- **Leexi**: try listing recent meetings
+- **Krisp**: try listing recent transcripts
+- **Granola**: try listing recent notes
 - **Otter.ai / Fireflies**: try listing recent transcripts
 - **BrightData**: try a test scrape or API ping
 - **FullEnrich**: try a test enrichment lookup
@@ -109,11 +117,11 @@ Last updated: [today's date]
 - MCP connected: [yes / no / not checked]
 
 ## CRM
-- Tool: [HubSpot / Salesforce / Pipedrive / None]
+- Tool: [HubSpot / Salesforce / Pipedrive / Teamleader / None]
 - MCP connected: [yes / no / not checked]
 
 ## Meeting Recorder
-- Tool: [Fathom / Otter.ai / Fireflies / None]
+- Tool: [Fathom / Leexi / Krisp / Granola / Otter.ai / Fireflies / None]
 - MCP connected: [yes / no / not checked]
 
 ## Enrichment

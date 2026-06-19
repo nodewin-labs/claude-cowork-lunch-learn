@@ -88,13 +88,47 @@ Fill in actual angle options based on topic research.
 
 ## Step 3. Write the draft
 
-Write the post:
-- Read voice.md for tone, rhythm, hook style, CTA style, absence patterns
-- Read about-me.md for audience and topic context
-- Match sentence length and paragraph rhythm from voice.md
-- Avoid every banned word, structure, and pattern in voice.md
-- Use the hook pattern that fits the chosen angle
-- End with the CTA style from voice.md
+### 3a. Show the writing brief
+
+Before writing a single word, read voice.md and about-me.md and present the user with a visible brief — the rules this post will follow. Extract every relevant constraint and show it:
+
+> **Writing brief for this post:**
+>
+> | Constraint | Value |
+> |-----------|-------|
+> | **Tone** | [from voice.md — e.g. "Confident, direct, no fluff"] |
+> | **POV** | [from voice.md — e.g. "First person singular"] |
+> | **Avg sentence length** | [from voice.md — e.g. "14 words (range: 8-22)"] |
+> | **Paragraph length** | [from voice.md — e.g. "2-3 sentences"] |
+> | **Post length** | [150-300 words unless user requested otherwise] |
+> | **Hook style** | [the hook pattern chosen in Step 2] |
+> | **Closing style** | [from voice.md — e.g. "Direct CTA, no motivational fluff"] |
+> | **Format** | [from voice.md — e.g. "Prose over lists, no emoji"] |
+>
+> **Banned patterns** (zero tolerance):
+> - [banned phrase 1 from voice.md]
+> - [banned phrase 2]
+> - [banned phrase 3]
+> - [...all banned patterns from voice.md]
+>
+> **This voice never:**
+> - [never-does 1 from voice.md]
+> - [never-does 2]
+> - [...]
+
+Fill every row from actual voice.md data. Do not show empty or placeholder rows. If voice.md does not have data for a constraint, omit that row.
+
+Wait for the user to confirm or adjust before writing. If they say "looks good" or similar, proceed. If they want to override a constraint for this specific post (e.g. "make it longer this time"), note the override.
+
+### 3b. Write the post
+
+Now write, following every constraint from the brief:
+- Match the sentence length range — if average is 14 words, keep most sentences between 10-18 words
+- Match the paragraph rhythm and pacing pattern
+- Check every sentence against the banned patterns list — if a sentence contains a banned phrase, rewrite it
+- Use the hook pattern from the brief
+- End with the closing style from the brief
+- Apply any user overrides from 3a
 
 Output inside a plain code block:
 
@@ -102,7 +136,7 @@ Output inside a plain code block:
 [The full post with all line breaks and formatting as it should appear on LinkedIn]
 ```
 
-After the code block, add 2-3 sentences on why you chose this hook and structure.
+After the code block, add 2-3 sentences on why you chose this hook and structure, referencing specific patterns from voice.md.
 
 ## Step 4. Iterate
 
@@ -110,15 +144,56 @@ After the code block, add 2-3 sentences on why you chose this hook and structure
 
 If feedback: revise and output new code block. Maximum 3 revision rounds.
 
-If "ship it": save as a markdown file in the project.
+If "ship it": save as a markdown file in the project, then proceed to Step 5.
 
-> Post saved. You can come back anytime and say "write a post" to create more content in your voice.
+## Step 5. Voice profile feedback loop
+
+After the post is saved, ask the user:
+
+> Now that you have seen your voice in action — is there anything you want to update in your voice profile?
+>
+> For example:
+> - "The tone is too formal, make it warmer"
+> - "Add 'synergy' to the banned phrases"
+> - "My sentence length should be shorter"
+> - "I actually do use rhetorical questions, remove that ban"
+> - "Update my point of view to be sharper"
+
+Use AskUserQuestion:
+
+```json
+[
+  {
+    "question": "Anything to update in your voice profile based on this post?",
+    "header": "Voice tuning",
+    "multiSelect": false,
+    "options": [
+      {"label": "Update voice.md", "description": "Change tone, sentence rhythm, banned patterns, hooks, or other writing rules"},
+      {"label": "Update about-me.md", "description": "Change audience, topics, point of view, brand promise, or off-limits"},
+      {"label": "Update both", "description": "I have feedback on both my identity and my writing style"},
+      {"label": "No changes", "description": "The profile is accurate — keep it as is"}
+    ]
+  }
+]
+```
+
+If the user wants updates:
+1. Ask what specifically to change (open conversation — let them describe it)
+2. Update the relevant file(s) in place
+3. Show what changed (diff-style: "Changed X from Y to Z")
+4. **Rewrite the post** using the updated profile — output a new code block with the revised post
+5. Ask if the rewrite is better. If not, iterate once more.
+
+If "No changes":
+
+> Voice profile confirmed. The more you use this, the sharper it gets. Say "write a post" anytime to create more content.
 
 ## Rules
 
 - Always read about-me.md and voice.md before writing.
 - Always output posts in a plain code block.
-- Never use em dashes in any post.
+- Never use any phrase listed in voice.md's "Banned phrases and patterns" section. Zero tolerance.
+- Match the sentence length metrics from voice.md. If average is 14 words, do not write 25-word sentences.
 - British English unless voice.md says otherwise.
 - Do not add hashtags unless voice.md explicitly uses them.
 - Do not add engagement bait CTAs unless they appear in voice.md.
