@@ -144,9 +144,49 @@ After the code block, add 2-3 sentences on why you chose this hook and structure
 
 If feedback: revise and output new code block. Maximum 3 revision rounds.
 
-If "ship it": save as a markdown file in the project.
+If "ship it": save as a markdown file in the project, then proceed to Step 5.
 
-> Post saved. You can come back anytime and say "write a post" to create more content in your voice.
+## Step 5. Voice profile feedback loop
+
+After the post is saved, ask the user:
+
+> Now that you have seen your voice in action — is there anything you want to update in your voice profile?
+>
+> For example:
+> - "The tone is too formal, make it warmer"
+> - "Add 'synergy' to the banned phrases"
+> - "My sentence length should be shorter"
+> - "I actually do use rhetorical questions, remove that ban"
+> - "Update my point of view to be sharper"
+
+Use AskUserQuestion:
+
+```json
+[
+  {
+    "question": "Anything to update in your voice profile based on this post?",
+    "header": "Voice tuning",
+    "multiSelect": false,
+    "options": [
+      {"label": "Update voice.md", "description": "Change tone, sentence rhythm, banned patterns, hooks, or other writing rules"},
+      {"label": "Update about-me.md", "description": "Change audience, topics, point of view, brand promise, or off-limits"},
+      {"label": "Update both", "description": "I have feedback on both my identity and my writing style"},
+      {"label": "No changes", "description": "The profile is accurate — keep it as is"}
+    ]
+  }
+]
+```
+
+If the user wants updates:
+1. Ask what specifically to change (open conversation — let them describe it)
+2. Update the relevant file(s) in place
+3. Show what changed (diff-style: "Changed X from Y to Z")
+4. **Rewrite the post** using the updated profile — output a new code block with the revised post
+5. Ask if the rewrite is better. If not, iterate once more.
+
+If "No changes":
+
+> Voice profile confirmed. The more you use this, the sharper it gets. Say "write a post" anytime to create more content.
 
 ## Rules
 
