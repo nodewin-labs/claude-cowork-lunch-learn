@@ -1,0 +1,19 @@
+{
+  "name": "metaskills",
+  "version": "1.0.0",
+  "description": "Skills that help you think clearly and build new skills. Includes structured interviewing, problem framing, option comparison, and a skill creator that generates custom SKILL.md files for your workflows.",
+  "author": {
+    "name": "Nodewin Labs",
+    "url": "https://github.com/nodewin-labs"
+  },
+  "repository": "https://github.com/nodewin-labs/claude-cowork-lunch-learn",
+  "license": "MIT",
+  "skills": [
+    "./skills/interview/SKILL.md",
+    "./skills/problem-statement/SKILL.md",
+    "./skills/problem-solution/SKILL.md",
+    "./skills/compare-options/SKILL.md",
+    "./skills/skill-creator/SKILL.md",
+    "./skills/skill-audit/SKILL.md"
+  ]
+}

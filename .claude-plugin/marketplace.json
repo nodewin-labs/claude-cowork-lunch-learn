@@ -1,0 +1,29 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-cowork-lunch-learn",
+  "description": "3 hands-on exercises for a 1.5h Claude Cowork lunch & learn. Each plugin teaches a different capability: LinkedIn content creation, meeting intelligence with MCPs, and metaskills for building your own skills.",
+  "owner": {
+    "name": "Nodewin Labs",
+    "url": "https://github.com/nodewin-labs"
+  },
+  "plugins": [
+    {
+      "name": "01-linkedin-content",
+      "description": "Build your voice profile and write LinkedIn posts that sound like you.",
+      "source": "./.claude/plugins/01-linkedin-content",
+      "category": "content"
+    },
+    {
+      "name": "02-meeting-intelligence",
+      "description": "Onboard your meeting stack, then get AI-powered pre-call briefs and post-meeting debriefs.",
+      "source": "./.claude/plugins/02-meeting-intelligence",
+      "category": "productivity"
+    },
+    {
+      "name": "03-metaskills",
+      "description": "Skills that help you think, solve problems, and build new skills from scratch.",
+      "source": "./.claude/plugins/03-metaskills",
+      "category": "meta"
+    }
+  ]
+}
