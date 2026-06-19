@@ -2,7 +2,7 @@
 
 ## Step 1: Create a BrightData account
 
-Sign up at [https://get.brightdata.com/a9drujwubyjc](https://get.brightdata.com/a9drujwubyjc)
+Sign up at [BrightData](https://get.brightdata.com/a9drujwubyjc)
 
 You get **5,000 free credits** after signup — enough for hundreds of profile lookups.
 

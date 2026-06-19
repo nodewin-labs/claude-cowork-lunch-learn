@@ -2,7 +2,7 @@
 
 ## Step 1: Create a FullEnrich account
 
-Sign up at [https://fullenrich.partnerlinks.io/pum64ct0fe4h](https://fullenrich.partnerlinks.io/pum64ct0fe4h)
+Sign up at [FullEnrich](https://fullenrich.partnerlinks.io/pum64ct0fe4h)
 
 You get **1,000 free credits** after signup — enough for hundreds of contact enrichments.
 
