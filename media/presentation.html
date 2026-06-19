@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Cowork Lunch & Learn — Academy by Wintercircus</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: #0a0a0a; color: #e5e5e5; overflow: hidden; }
+
+  .slide { width: 100vw; height: 100vh; display: none; position: relative; flex-direction: column; justify-content: center; align-items: center; padding: 60px 80px; }
+  .slide.active { display: flex; }
+
+  /* Logo on every slide */
+  .logo { position: absolute; top: 32px; right: 40px; height: 48px; opacity: 0.85; }
+
+  /* Slide counter */
+  .counter { position: absolute; bottom: 24px; right: 40px; font-size: 13px; color: #525252; letter-spacing: 1px; }
+
+  /* Navigation hint */
+  .nav-hint { position: fixed; bottom: 24px; left: 40px; font-size: 12px; color: #404040; z-index: 100; }
+
+  /* Title slide */
+  .slide-title { background-image: url('circus-curtains.png'); background-size: cover; background-position: center; }
+  .slide-title::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.85) 50%, rgba(0,0,0,0.9) 100%); }
+  .slide-title .content { position: relative; z-index: 1; text-align: center; }
+  .slide-title h1 { font-size: 72px; font-weight: 700; color: #fff; letter-spacing: -1px; line-height: 1.15; text-shadow: 0 2px 20px rgba(0,0,0,0.8); }
+  .slide-title .subtitle { font-size: 26px; color: #d4d4d4; margin-top: 20px; font-weight: 400; text-shadow: 0 1px 10px rgba(0,0,0,0.6); }
+  .slide-title .byline { font-size: 15px; color: #999; margin-top: 48px; letter-spacing: 3px; text-transform: uppercase; }
+
+  /* Content slides */
+  h2 { font-size: 56px; font-weight: 600; color: #fafafa; margin-bottom: 48px; text-align: center; line-height: 1.2; }
+  h2 .dim { color: #525252; font-weight: 400; }
+  .subhead { font-size: 22px; color: #737373; text-align: center; margin-top: -36px; margin-bottom: 48px; }
+
+  /* Schedule table */
+  table { border-collapse: collapse; width: 100%; max-width: 1000px; }
+  th, td { padding: 18px 24px; text-align: left; border-bottom: 1px solid #1a1a1a; font-size: 22px; }
+  th { color: #737373; font-size: 14px; text-transform: uppercase; letter-spacing: 1.5px; font-weight: 500; border-bottom: 1px solid #333; }
+  td { color: #d4d4d4; }
+  td:first-child { color: #737373; font-family: 'SF Mono', monospace; font-size: 20px; width: 100px; }
+  tr .type { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; padding: 3px 10px; border-radius: 4px; }
+  .type-theory { background: #1a1a2e; color: #818cf8; }
+  .type-handson { background: #1a2e1a; color: #6ee7b7; }
+  .type-close { background: #2e1a1a; color: #fca5a5; }
+
+  /* Full-image slides */
+  .slide-image { padding: 0; }
+  .slide-image .logo { display: none; }
+  .slide-image .counter { display: none; }
+  .slide-image img.fullslide { width: 100vw; height: 100vh; object-fit: cover; border-radius: 0; }
+
+  /* Exercise slides */
+  .exercise-card { background: #141414; border: 1px solid #262626; border-radius: 16px; padding: 56px 72px; max-width: 900px; width: 100%; }
+  .exercise-card .ex-number { font-size: 15px; text-transform: uppercase; letter-spacing: 3px; color: #737373; margin-bottom: 10px; }
+  .exercise-card h3 { font-size: 44px; font-weight: 600; color: #fafafa; margin-bottom: 32px; }
+  .exercise-card .install { font-size: 16px; color: #525252; font-family: 'SF Mono', monospace; margin-bottom: 32px; padding: 14px 20px; background: #0a0a0a; border-radius: 8px; border: 1px solid #1a1a1a; }
+  .exercise-card ul { list-style: none; }
+  .exercise-card li { padding: 10px 0; font-size: 22px; color: #d4d4d4; }
+  .exercise-card li::before { content: "→ "; color: #6ee7b7; }
+  .exercise-card .time { margin-top: 32px; font-size: 18px; color: #525252; }
+
+  /* Metaskills slide */
+  .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; max-width: 800px; width: 100%; }
+  .meta-col h4 { font-size: 16px; text-transform: uppercase; letter-spacing: 1.5px; color: #737373; margin-bottom: 20px; }
+  .meta-item { background: #141414; border: 1px solid #262626; border-radius: 10px; padding: 18px 22px; margin-bottom: 12px; }
+  .meta-item .name { font-family: 'SF Mono', monospace; font-size: 20px; color: #818cf8; }
+  .meta-item .desc { font-size: 16px; color: #a3a3a3; margin-top: 6px; }
+
+  /* Close slide */
+  .checklist { list-style: none; max-width: 500px; }
+  .checklist li { padding: 12px 0; font-size: 26px; color: #d4d4d4; }
+  .checklist li::before { content: "✓ "; color: #6ee7b7; font-weight: 700; }
+  .next-steps { margin-top: 48px; text-align: center; }
+  .next-steps a { color: #818cf8; text-decoration: none; font-size: 20px; }
+  .next-steps p { color: #525252; font-size: 18px; margin-top: 10px; }
+  .repo-url { margin-top: 40px; font-family: 'SF Mono', monospace; font-size: 18px; color: #525252; text-align: center; }
+</style>
+</head>
+<body>
+
+<div class="nav-hint">← → arrow keys to navigate</div>
+
+<!-- Slide 1: Title -->
+<div class="slide slide-title active" data-slide="1">
+  <img src="academy-logo.png" class="logo" style="height: 56px; filter: brightness(2);" alt="Academy by Wintercircus">
+  <div class="content">
+    <h1>Claude Cowork</h1>
+    <div class="subtitle">Build AI workflows in 90 minutes</div>
+    <div class="byline">Lunch & Learn · Academy by Wintercircus</div>
+  </div>
+  <div class="counter">1 / 15</div>
+</div>
+
+<!-- Slide 2: Schedule -->
+<div class="slide" data-slide="2">
+  <img src="academy-logo.png" class="logo" alt="">
+  <h2>Schedule</h2>
+  <table>
+    <tr><th>Time</th><th>Block</th><th>Type</th></tr>
+    <tr><td>12:00</td><td>Intro — What is Claude Cowork?</td><td><span class="type type-theory">Theory</span></td></tr>
+    <tr><td>12:15</td><td>Exercise 1 — LinkedIn Content</td><td><span class="type type-handson">Hands-on</span></td></tr>
+    <tr><td>12:35</td><td>What are MCPs?</td><td><span class="type type-theory">Theory</span></td></tr>
+    <tr><td>12:45</td><td>Exercise 2 — Meeting Intelligence</td><td><span class="type type-handson">Hands-on</span></td></tr>
+    <tr><td>13:10</td><td>What are Metaskills?</td><td><span class="type type-theory">Theory</span></td></tr>
+    <tr><td>13:20</td><td>Exercise 3 — Build Your Own Skill</td><td><span class="type type-handson">Hands-on</span></td></tr>
+    <tr><td>13:40</td><td>What's next + Q&A</td><td><span class="type type-close">Close</span></td></tr>
+  </table>
+  <div class="counter">2 / 16</div>
+</div>
+
+<!-- Slide 3: Chat vs Cowork vs Code -->
+<div class="slide slide-image" data-slide="3">
+  <img src="academy-logo.png" class="logo" alt="">
+  <img src="chat-cowork-code.png" class="fullslide" alt="From Chat to Code — Pick Your Level">
+  <div class="counter">3 / 16</div>
+</div>
+
+<!-- Slide 4: Unbundling Rebundling -->
+<div class="slide slide-image" data-slide="4">
+  <img src="academy-logo.png" class="logo" alt="">
+  <img src="unbundling-rebundling-logo.png" class="fullslide" alt="From Albums to Playlists">
+  <div class="counter">4 / 16</div>
+</div>
+
+<!-- Slide 5: Orchestration Pre -->
+<div class="slide slide-image" data-slide="5">
+  <img src="academy-logo.png" class="logo" alt="">
+  <img src="orchestration-layer-pre.png" class="fullslide" alt="The Orchestration Layer — Old Way">
+  <div class="counter">5 / 16</div>
+</div>
+
+<!-- Slide 6: Orchestration Post -->
+<div class="slide slide-image" data-slide="6">
+  <img src="academy-logo.png" class="logo" alt="">
+  <img src="orchestration-layer-post.png" class="fullslide" alt="The Orchestration Layer — Emerging Way">
+  <div class="counter">6 / 16</div>
+</div>
+
+<!-- Slide 7: Task vs System -->
+<div class="slide slide-image" data-slide="7">
+  <img src="academy-logo.png" class="logo" alt="">
+  <img src="task-vs-system-logo.png" class="fullslide" alt="Task-Centric vs System-Centric">
+  <div class="counter">7 / 16</div>
+</div>
+
+<!-- Slide 8: MCPs vs Skills -->
+<div class="slide slide-image" data-slide="8">
+  <img src="academy-logo.png" class="logo" alt="">
+  <img src="mcp-vs-skills-logo.png" class="fullslide" alt="MCPs = Hands, Skills = Recipes">
+  <div class="counter">8 / 16</div>
+</div>
+
+<!-- Slide 9: Skill Content Matrix -->
+<div class="slide slide-image" data-slide="9">
+  <img src="academy-logo.png" class="logo" alt="">
+  <img src="skill-content-matrix.png" class="fullslide" alt="Skill: Content Matrix">
+  <div class="counter">9 / 16</div>
+</div>
+
+<!-- Slide 10: Exercise 1 -->
+<div class="slide" data-slide="10">
+  <img src="academy-logo.png" class="logo" alt="">
+  <div class="exercise-card">
+    <div class="ex-number">Exercise 1</div>
+    <h3>LinkedIn Content</h3>
+    <div class="install">Install Plugin → .claude/plugins/01-linkedin-content/</div>
+    <ul>
+      <li>Voice profile (about-me.md + voice.md)</li>
+      <li>AI anti-pattern scan on your writing</li>
+      <li>Your first LinkedIn post in your voice</li>
+    </ul>
+    <div class="time">20 minutes</div>
+  </div>
+  <div class="counter">10 / 16</div>
+</div>
+
+<!-- Slide 11: Exercise 2 -->
+<div class="slide" data-slide="11">
+  <img src="academy-logo.png" class="logo" alt="">
+  <div class="exercise-card">
+    <div class="ex-number">Exercise 2</div>
+    <h3>Meeting Intelligence</h3>
+    <div class="install">Install Plugin → .claude/plugins/02-meeting-intelligence/</div>
+    <ul>
+      <li>Configure your stack (calendar, CRM, recorder)</li>
+      <li>Connect BrightData + FullEnrich MCPs</li>
+      <li>Pre-call brief for your next meeting</li>
+    </ul>
+    <div class="time">25 minutes</div>
+  </div>
+  <div class="counter">11 / 16</div>
+</div>
+
+<!-- Slide 12: Metaskills Theory -->
+<div class="slide" data-slide="12">
+  <img src="academy-logo.png" class="logo" alt="">
+  <h2>Metaskills</h2>
+  <p class="subhead">Skills that help you think — and skills that build skills</p>
+  <div class="meta-grid">
+    <div class="meta-col">
+      <h4>Think clearly</h4>
+      <div class="meta-item"><div class="name">/interview</div><div class="desc">95% confidence about what you actually want</div></div>
+      <div class="meta-item"><div class="name">/problem-statement</div><div class="desc">Frame the problem before solving it</div></div>
+      <div class="meta-item"><div class="name">/problem-solution</div><div class="desc">Structured solution design</div></div>
+      <div class="meta-item"><div class="name">/compare-options</div><div class="desc">Pro/con with a clear recommendation</div></div>
+    </div>
+    <div class="meta-col">
+      <h4>Build skills</h4>
+      <div class="meta-item"><div class="name">/skill-creator</div><div class="desc">Turn your workflow into a reusable skill</div></div>
+      <div class="meta-item"><div class="name">/skill-audit</div><div class="desc">Review and improve existing skills</div></div>
+    </div>
+  </div>
+  <div class="counter">12 / 16</div>
+</div>
+
+<!-- Slide 13: Exercise 3 -->
+<div class="slide" data-slide="13">
+  <img src="academy-logo.png" class="logo" alt="">
+  <div class="exercise-card">
+    <div class="ex-number">Exercise 3</div>
+    <h3>Build Your Own Skill</h3>
+    <div class="install">Install Plugin → .claude/plugins/03-metaskills/</div>
+    <ul>
+      <li>Impact/effort matrix of your repetitive workflows</li>
+      <li>Deep interview on the top candidate</li>
+      <li>Problem framing + solution design</li>
+      <li>A custom SKILL.md you can use next week</li>
+    </ul>
+    <div class="time">20 minutes</div>
+  </div>
+  <div class="counter">13 / 16</div>
+</div>
+
+<!-- Slide 14: Throughput (closing theory) -->
+<div class="slide slide-image" data-slide="14">
+  <img src="academy-logo.png" class="logo" alt="">
+  <img src="throughput-branded.png" class="fullslide" alt="The Algorithmic Company">
+  <div class="counter">14 / 16</div>
+</div>
+
+<!-- Slide 15: Close -->
+<div class="slide" data-slide="15">
+  <img src="academy-logo.png" class="logo" alt="">
+  <h2>What you built today</h2>
+  <ul class="checklist">
+    <li>Voice profile + LinkedIn post</li>
+    <li>Meeting prep system with MCPs</li>
+    <li>Custom skill from your workflow</li>
+  </ul>
+  <div class="next-steps">
+    <p>Go deeper:</p>
+    <a>Claude Zero to Hero (full day) · Growth by Design (multi-day)</a>
+  </div>
+  <div class="repo-url">github.com/nodewin-labs/claude-cowork-lunch-learn</div>
+  <div class="counter">15 / 16</div>
+</div>
+
+<!-- Slide 16: Auto-Accept -->
+<div class="slide" data-slide="16">
+  <img src="academy-logo.png" class="logo" alt="">
+  <h2>Pro tip: Auto-Accept</h2>
+  <p class="subhead">Turn this on so Claude can run skills without asking permission every step</p>
+  <img src="auto-accept-button.gif" style="max-width: 80vw; max-height: 65vh; border-radius: 12px; border: 1px solid #262626;" alt="Auto-accept button">
+  <div class="counter">16 / 16</div>
+</div>
+
+<script>
+  let current = 1;
+  const total = 16;
+
+  function showSlide(n) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    const target = document.querySelector(`[data-slide="${n}"]`);
+    if (target) { target.classList.add('active'); current = n; }
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); showSlide(Math.min(current + 1, total)); }
+    if (e.key === 'ArrowLeft') { e.preventDefault(); showSlide(Math.max(current - 1, 1)); }
+    if (e.key === 'Home') { showSlide(1); }
+    if (e.key === 'End') { showSlide(total); }
+    if (e.key === 'f' || e.key === 'F') { document.documentElement.requestFullscreen?.(); }
+  });
+
+  // Touch/swipe support
+  let touchStartX = 0;
+  document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
+  document.addEventListener('touchend', e => {
+    const diff = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) { diff > 0 ? showSlide(Math.min(current+1, total)) : showSlide(Math.max(current-1, 1)); }
+  });
+</script>
+</body>
+</html>

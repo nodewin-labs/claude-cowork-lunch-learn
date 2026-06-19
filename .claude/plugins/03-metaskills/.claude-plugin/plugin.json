@@ -8,12 +8,5 @@
   },
   "repository": "https://github.com/nodewin-labs/claude-cowork-lunch-learn",
   "license": "MIT",
-  "skills": [
-    "./skills/interview/SKILL.md",
-    "./skills/problem-statement/SKILL.md",
-    "./skills/problem-solution/SKILL.md",
-    "./skills/compare-options/SKILL.md",
-    "./skills/skill-creator/SKILL.md",
-    "./skills/skill-audit/SKILL.md"
-  ]
+  "skills": "./skills/"
 }

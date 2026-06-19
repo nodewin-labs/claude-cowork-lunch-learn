@@ -9,9 +9,5 @@
   "repository": "https://github.com/nodewin-labs/claude-cowork-lunch-learn",
   "license": "MIT",
   "mcpServers": "../.mcp.json",
-  "skills": [
-    "./skills/onboarding/SKILL.md",
-    "./skills/pre-call-brief/SKILL.md",
-    "./skills/post-meeting-debrief/SKILL.md"
-  ]
+  "skills": "./skills/"
 }
