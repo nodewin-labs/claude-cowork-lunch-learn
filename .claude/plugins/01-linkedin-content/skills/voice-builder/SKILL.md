@@ -35,32 +35,41 @@ If the user types "skip": proceed directly to Step 2.
 
 ## Step 2. Run the About Me interview
 
-Use AskUserQuestion in 2 batches. The tool renders interactive forms — better than typing answers in chat.
+Use AskUserQuestion for each question. **Build the options dynamically** from the website analysis in Step 1 — the suggestions should reflect what you actually found on their site. Always include an "Other" option so the user can nuance or provide their own answer if the suggestions do not fit.
+
+If Step 1 was skipped (no website analysis), use generic open-ended options instead.
+
+### How to build dynamic options
+
+For each question below, generate 2-3 option labels and descriptions **derived from the website analysis**. For example:
+- If the website says "We help B2B SaaS companies grow" → suggest "B2B SaaS founders" as an audience option
+- If the blog covers AI, sales, and leadership → suggest those as topic options
+- If the website tone is blunt and data-driven → suggest "Blunt and data-driven" as a brand promise option
+
+The "Other" option is always available automatically via AskUserQuestion — the user can type their own answer.
 
 ### Batch 1 (send immediately after Step 1)
+
+Call AskUserQuestion with 3-4 questions. Build the options dynamically:
 
 ```json
 [
   {
-    "question": "What is your name and what do you do?",
+    "question": "What is your name and what do you do? Describe your role and what makes it different.",
     "header": "About you",
     "multiSelect": false,
     "options": [
-      {"label": "Founder", "description": "I run my own company or consultancy"},
-      {"label": "Marketing lead", "description": "I lead marketing at a company"},
-      {"label": "Sales leader", "description": "I lead a sales team or run business development"},
-      {"label": "Consultant", "description": "I advise companies on strategy or operations"}
+      {"label": "[role suggested from website, e.g. 'Founder at X']", "description": "[context from website about what the company does]"},
+      {"label": "[alternative role interpretation]", "description": "[based on website signals]"}
     ]
   },
   {
-    "question": "Who are you writing for?",
+    "question": "Who is your audience? When you publish on LinkedIn, who do you want reading it?",
     "header": "Audience",
     "multiSelect": false,
     "options": [
-      {"label": "Founders and CEOs", "description": "Decision makers running companies"},
-      {"label": "B2B buyers", "description": "People evaluating products or services for their company"},
-      {"label": "Tech leaders", "description": "CTOs, VPs of engineering, technical decision makers"},
-      {"label": "Small business owners", "description": "Entrepreneurs and SME operators"}
+      {"label": "[audience from website, e.g. 'B2B SaaS founders']", "description": "[why — based on website value prop]"},
+      {"label": "[secondary audience from website]", "description": "[based on blog content or services page]"}
     ]
   },
   {
@@ -68,53 +77,59 @@ Use AskUserQuestion in 2 batches. The tool renders interactive forms — better 
     "header": "Topics",
     "multiSelect": true,
     "options": [
-      {"label": "AI and automation", "description": "How AI tools change work"},
-      {"label": "Go-to-market strategy", "description": "Sales, marketing, growth tactics"},
-      {"label": "Leadership", "description": "Management, hiring, culture, team building"},
-      {"label": "Sales intelligence", "description": "Data-driven selling, CRM, prospecting"}
+      {"label": "[topic 1 from blog/website]", "description": "[specific angle found on site]"},
+      {"label": "[topic 2 from blog/website]", "description": "[specific angle found on site]"},
+      {"label": "[topic 3 from blog/website]", "description": "[specific angle found on site]"}
     ]
   },
   {
-    "question": "What is your point of view on your industry — the thing you believe that others do not?",
+    "question": "What is your point of view — the thing you believe that most people in your space do not?",
     "header": "Hot take",
     "multiSelect": false,
     "options": [
-      {"label": "Most advice is wrong", "description": "The consensus in your industry is broken"},
-      {"label": "People overcomplicate it", "description": "The answer is simpler than people think"},
-      {"label": "A big shift is coming", "description": "Something is about to change and most are not ready"}
+      {"label": "[contrarian angle from website messaging]", "description": "[extracted from how they position against alternatives]"},
+      {"label": "[another distinctive stance from blog content]", "description": "[based on recurring themes]"}
     ]
   }
 ]
 ```
 
-### Batch 2 (send immediately after Batch 1 answers, no commentary between)
+### Batch 2 (after Batch 1 answers are confirmed)
 
 ```json
 [
   {
-    "question": "What is the one thing you want people to think when they see your name?",
+    "question": "What is the one thing you want people to think when they see YOUR name? Not your company — you personally.",
     "header": "Brand promise",
     "multiSelect": false,
     "options": [
-      {"label": "This person is practical", "description": "They give me things I can use immediately"},
-      {"label": "This person is honest", "description": "They tell me what others will not"},
-      {"label": "This person is ahead", "description": "They see what is coming before everyone else"}
+      {"label": "[brand personality from website tone analysis]", "description": "[e.g. 'Practical — gives things I can use immediately']"},
+      {"label": "[alternative brand impression]", "description": "[based on website voice signals]"}
     ]
   },
   {
-    "question": "What is one thing you refuse to write about?",
+    "question": "What topics or angles do you refuse to write about, no matter how trendy?",
     "header": "Off limits",
     "multiSelect": false,
     "options": [
-      {"label": "Politics", "description": "No political takes, ever"},
-      {"label": "Personal life", "description": "Keep it professional only"},
-      {"label": "Competitors", "description": "No naming or shaming other people or brands"}
+      {"label": "[inferred from website absence patterns]", "description": "[e.g. 'No political takes — not found anywhere on site']"},
+      {"label": "[another boundary inferred from tone]", "description": "[based on what the website deliberately avoids]"}
     ]
   }
 ]
 ```
 
-After both batches: if any answer is blank, ask once more in chat, then move on.
+### After both batches
+
+Review each answer for depth. If any answer is too brief or generic to build a meaningful profile, probe deeper with a follow-up AskUserQuestion:
+
+- **Too-brief role**: "Can you tell me more? What does your day-to-day look like, and what makes your role different from the average [title]?"
+- **Vague audience**: "Think of one specific person — what is their role, what keeps them up at night?"
+- **Broad topics**: "Can you narrow each one? Not 'marketing' but 'how small teams punch above their weight with AI.'"
+- **Safe hot take**: "That sounds like something most people would agree with. What is the version that would make someone push back?"
+- **Abstract brand promise**: "Forget the label — what is the GUT REACTION after reading your content?"
+
+Restate all six answers as a summary. Confirm before writing about-me.md.
 
 ## Step 3. Write about-me.md
 
